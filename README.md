@@ -8,6 +8,6 @@
 
 #### 选中一段json字符串生成类
 
-1. 选中json字符串 ![](./src/assets/images/to%20class1.png)
+1. 选中json字符串 ![](./src/assets/images/toclass1.png)
 
-2. 右键点击 to class 生成
+2. 右键点击 to class 生成 ![](./src/assets/images/toclass2.png)
