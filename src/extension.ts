@@ -48,7 +48,11 @@ export function activate(context: vscode.ExtensionContext) {
         // 获取当前编辑文件的目录
         const currentFileDir = path.dirname(currentFilePath);
 
-		createTsClassFile(classFileContent.className,classFileContent.classStr,currentFileDir);
+        createTsClassFile(
+          classFileContent.className,
+          classFileContent.classStr,
+          currentFileDir
+        );
       }
 
       vscode.window.showInformationMessage("Welcome to use Json To Class!");

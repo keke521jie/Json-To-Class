@@ -12,7 +12,11 @@ export interface ClassFile{
  */
 export function jsonToClass(fileName: string, content: string):ClassFile {
   const className = toUpperCaseFrist(fileName.split(".")[0]);
+  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@");
+  
   const jsonObj = JSON.parse(content);
+
+  console.log(jsonObj,"jsonObjjsonObjjsonObj");
 
   // 这个变量存储中间遇到的对象数组情况转换为类的字符串
   let classArr:string[] = []; 
