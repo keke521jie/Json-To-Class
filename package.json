@@ -2,7 +2,7 @@
   "name": "jsontoclass",
   "displayName": "Json To Class",
   "description": "And json to class",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "publisher": "Yuanjie",
   "license": "MIT",
   "icon":"icon.png",
@@ -31,12 +31,24 @@
             }
           ]
         }
+      ],
+      "editor/context": [
+        {
+          "command": "jsontoclass.checkJsonOrObjectStr",
+          "group": "1_modification",
+          "when": "resourceLangId == json || resourceLangId == typescript || resourceLangId == javascript",
+          "context": [
+            {
+              "resourceLangId": "json"
+            }
+          ]
+        }
       ]
     },
     "commands": [
       {
-        "command": "jsontoclass.helloWorld",
-        "title": "json to class"
+        "command": "jsontoclass.checkJsonOrObjectStr",
+        "title": "to class"
       },
       {
         "command": "jsontoclass.checkJsonFile",
