@@ -3,12 +3,18 @@
   "displayName": "Json To Class",
   "description": "And json to class",
   "version": "0.0.1",
+  "publisher": "Yuanjie",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.84.0"
   },
   "categories": [
     "Other"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/keke521jie/Json-To-Class.git"
+  },
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
