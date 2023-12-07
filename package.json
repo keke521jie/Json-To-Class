@@ -2,9 +2,10 @@
   "name": "jsontoclass",
   "displayName": "Json To Class",
   "description": "And json to class",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "publisher": "Yuanjie",
   "license": "MIT",
+  "icon":"icon.png",
   "engines": {
     "vscode": "^1.84.0"
   },
