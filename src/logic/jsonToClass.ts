@@ -1,4 +1,5 @@
-import * as vscode from "vscode";
+import { handleObjToClass } from "./handleObjToClass";
+import { toUpperCaseFrist } from "./handleStr";
 
 export interface ClassFile{
     className:string,
@@ -10,39 +11,29 @@ export interface ClassFile{
  * @returns 返回 ClassFile 类的名称字符串 和 类的内容字符串
  */
 export function jsonToClass(fileName: string, content: string):ClassFile {
-  const className =
-    fileName.split(".")[0].charAt(0).toUpperCase() +
-    fileName.split(".")[0].slice(1);
+  const className = toUpperCaseFrist(fileName.split(".")[0]);
   const jsonObj = JSON.parse(content);
 
-  let classStr = `class ${className}{\n`;
+  // 这个变量存储中间遇到的对象数组情况转换为类的字符串
+  let classArr:string[] = []; 
 
-  for (let key in jsonObj) {
-    const value = jsonObj[key]
-    if (typeof value === "number") {
-      classStr += `public ${key}?:number;\n`;
-    } else if (typeof value === "boolean") {
-      classStr += `public ${key}?:boolean;\n`;
-    } else if (typeof value === "string") {
-      classStr += `public ${key}?:string;\n`;
-    }else if(isObject(value)){
-        // 执行对象处理函数
-    }else{
-        classStr += `public ${key}?:unknow;\n`;
-    }
-  }
+  const classStr = handleObjToClass(className,jsonObj,classArr);
+  classArr.push(classStr);
 
-  classStr += `}`;
+  let resStr = "";
+  classArr.forEach(classStr => {
+    resStr += '\n' + classStr;
+  });
 
   return {
     className,
-    classStr
+    classStr:resStr
   };
 }
 
 
-
 // 判断一个数据是否为object
-function isObject(value: any): boolean {
-  return typeof value === "object" && value !== null;
+export function isObject(value: any): boolean {
+  return typeof value === "object" && value !== null && !(value instanceof Array);
 }
+
