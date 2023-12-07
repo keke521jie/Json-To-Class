@@ -9,10 +9,50 @@ import { createTsClassFile } from "./fileHandle/createTsClassFile";
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
   let disposable = vscode.commands.registerCommand(
-    "jsontoclass.helloWorld",
+    "jsontoclass.checkJsonOrObjectStr",
     () => {
       // showInformationMessage 给用户提示一条消息
       vscode.window.showInformationMessage("Welcome to use Json To Class!");
+      const editor = vscode.window.activeTextEditor;
+
+      if (editor) {
+        // 获取当前编辑的文件的 URI
+        const uri = editor.document.uri;
+
+        // 获取文件名
+        const fileName = vscode.workspace.asRelativePath(uri);
+
+        // 获取用户选中的文本范围
+        const selection = editor.selection;
+
+        // 获取选中的文本
+        const selectedText = editor.document.getText(selection);
+
+        const classFileContent = jsonToClass(fileName, selectedText);
+
+        if(!classFileContent) {return;}
+
+        // 创建一个 TextEdit 对象，表示要插入的文本
+        const edit = new vscode.TextEdit(
+            new vscode.Range(selection.end, selection.end),
+            `\n${classFileContent.classStr}`
+        );
+
+        // 创建一个 WorkspaceEdit 对象，表示一组编辑操作
+        const editBuilder = new vscode.WorkspaceEdit();
+
+        // 将 TextEdit 添加到 WorkspaceEdit 中
+        editBuilder.set(editor.document.uri, [edit]);
+
+        // 应用编辑操作到文档中
+        vscode.workspace.applyEdit(editBuilder);
+
+        // 更新光标位置，将光标移到插入的文本后面
+        editor.selection = new vscode.Selection(selection.end.translate(1), selection.end.translate(1));
+
+        // 在输出窗口中显示选中的文本
+        vscode.window.showInformationMessage(`Selected Text: ${selectedText}`);
+      }
     }
   );
 
@@ -38,6 +78,8 @@ export function activate(context: vscode.ExtensionContext) {
         const content = document.getText();
 
         const classFileContent = jsonToClass(fileName, content);
+
+        if(!classFileContent) {return;}
 
         // 获取当前编辑文件的 URI
         const currentFileUri = editor.document.uri;

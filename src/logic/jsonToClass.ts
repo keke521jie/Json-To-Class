@@ -1,3 +1,4 @@
+import * as vscode from "vscode";
 import { handleObjToClass } from "./handleObjToClass";
 import { toUpperCaseFrist } from "./handleStr";
 
@@ -10,11 +11,18 @@ export interface ClassFile{
  * @param content 接受一个json字符串
  * @returns 返回 ClassFile 类的名称字符串 和 类的内容字符串
  */
-export function jsonToClass(fileName: string, content: string):ClassFile {
+export function jsonToClass(fileName: string, content: string):ClassFile | null{
   const className = toUpperCaseFrist(fileName.split(".")[0]);
-  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@");
   
-  const jsonObj = JSON.parse(content);
+
+  let jsonObj;
+
+  try {
+    jsonObj = JSON.parse(content);
+  } catch (error) {
+    vscode.window.showErrorMessage(`选择的文本有误，必须是完整的json字符串`);
+    return null;
+  }
 
   console.log(jsonObj,"jsonObjjsonObjjsonObj");
 
